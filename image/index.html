@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>Document</title>
+        <style>
+            li{
+                min-height: 1200px;
+            }
+        </style>
+	</head>
+	<body>
+		<ul>
+			<li><img data-src="./img/G.jpg" alt="" /></li>
+			<li><img data-src="./img/Y.jpg" alt="" /></li>
+			<li><img data-src="./img/R.jpg" alt="" /></li>
+		</ul>
+		<script>
+			const observer = new IntersectionObserver(function(changes) {
+                console.log(changes)
+				changes.forEach(function(element, index) {
+					// 当这个值大于 0，说明满足我们的加载条件了，这个值可通过 rootMargin 手动设置
+					if (element.intersectionRatio > 0) {
+						// 放弃监听，防止性能浪费，并加载图片。
+						observer.unobserve(element.target)
+						element.target.src = element.target.dataset.src
+					}
+				})
+			})
+            function initObserve() {
+                const item = document.querySelectorAll('img')
+                item.forEach(e => {
+                    observer.observe(e)
+                })
+            }
+            initObserve()
+		</script>
+	</body>
+</html>
